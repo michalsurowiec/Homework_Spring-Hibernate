@@ -1,6 +1,8 @@
 package michalsurowiec.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "authors")
@@ -11,6 +13,8 @@ public class Author {
     private long id;
     private String firstName;
     private String lastName;
+    @Transient
+    private Set<Article> articleSet = new HashSet<>();
 
     public Author() {
     }

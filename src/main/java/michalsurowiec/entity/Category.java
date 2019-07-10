@@ -1,6 +1,8 @@
 package michalsurowiec.entity;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "categories")
@@ -12,6 +14,8 @@ public class Category {
     @Column(length = 100)
     private String name;
     private String description;
+    @ManyToMany(mappedBy = "categorySet")
+    private Set<Article> articleSet = new HashSet<>();
 
     public Category() {
     }

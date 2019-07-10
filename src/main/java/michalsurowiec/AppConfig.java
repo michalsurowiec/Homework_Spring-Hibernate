@@ -34,7 +34,7 @@ public class AppConfig extends WebMvcConfigurerAdapter {
     public LocalEntityManagerFactoryBean entityManagerFactory() {
         LocalEntityManagerFactoryBean emfb =
                 new LocalEntityManagerFactoryBean();
-        emfb.setPersistenceUnitName("springMvcJpa");
+        emfb.setPersistenceUnitName("springcms");
         return emfb;
     }
 
