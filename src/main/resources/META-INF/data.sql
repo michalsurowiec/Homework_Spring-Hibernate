@@ -1,0 +1,7 @@
+INSERT INTO authors VALUES (null, 'Michał', 'Surowiec'), (null, 'Sebastian', 'Kowalski'), (null, 'Radek', 'Nowak')
+
+INSERT INTO articles VALUES (null, 'To zależy, czy masz odpowiednie umiejętności oraz szczęście.', '2019-07-10 15:40:30', 'Czy znajdę pracę?', null, 1),(null, 'Na początek zobaczmy, jak to wygląda w innych krajach.', '2019-07-03 09:39:59', 'Czy broń powinna być legalna?', null, 2),(null, 'Zapowiedziano niedawno nową konsolę od Sony, Playstation5.', '2019-06-26 23:09:30', 'Nowe Playstation!', null, 3),(null, 'Szczęśliwi jesteśmy poinformować was o nowym dziennikarzu, Radku Zaparcie.', '2019-06-20 05:40:30', 'Świeża krew w redakcji!', null, 1),(null, 'Za miesiąc odbędzie się nasz coroczny piknik, na którym spotkacie się z waszymi ulubionymi dziennikarzami.', '2019-06-13 12:19:30', 'Zapraszamy na imprezę integracyjną', null, 2)
+
+INSERT INTO categories VALUES (null, 'Wszelkie informacje dotyczące bezpośrednio naszej redakcji', 'Aktualności u nas'), (null, 'O broni palnej. Bo wiemy, że ją lubicie', 'Broń palna'), (null, 'Branża gier komputerowych, i warto jest mieć na nią oko.', 'Gry komputerowe'), (null, 'Dużo o tym wiemy, bo też byliśmy bezrobotnymi. Teraz chcemy wam pomóc!', 'Rynek pracy')
+
+INSERT INTO article_category VALUES (4, 1), (5, 1), (3 , 3), (2, 2), (1, 4), (4, 4)

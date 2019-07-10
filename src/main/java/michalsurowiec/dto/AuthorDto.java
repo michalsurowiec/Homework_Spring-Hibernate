@@ -1,40 +1,29 @@
-package michalsurowiec.entity;
+package michalsurowiec.dto;
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import michalsurowiec.entity.Article;
+
 import java.util.HashSet;
 import java.util.Set;
 
-@Entity
-@Table(name = "authors")
-public class Author {
+public class AuthorDto {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull
     private String firstName;
-    @NotNull
     private String lastName;
-    @OneToMany(mappedBy = "author")
     private Set<Article> articleSet = new HashSet<>();
+
+    public AuthorDto(Long id) {
+        this.id = id;
+    }
 
     @Override
     public String toString() {
-        return "Author{" +
+        return "AuthorDto{" +
                 "id=" + id +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
                 ", articleSet=" + articleSet +
                 '}';
-    }
-
-    public Author() {
-    }
-
-    public Author(String firstName, String lastName) {
-        this.firstName = firstName;
-        this.lastName = lastName;
     }
 
     public Long getId() {
@@ -59,5 +48,23 @@ public class Author {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public Set<Article> getArticleSet() {
+        return articleSet;
+    }
+
+    public void setArticleSet(Set<Article> articleSet) {
+        this.articleSet = articleSet;
+    }
+
+    public AuthorDto() {
+    }
+
+    public AuthorDto(long id, String firstName, String lastName, Set<Article> articleSet) {
+        this.id = id;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.articleSet = articleSet;
     }
 }
