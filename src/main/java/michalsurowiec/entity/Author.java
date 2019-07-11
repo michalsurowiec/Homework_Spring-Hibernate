@@ -29,6 +29,14 @@ public class Author {
                 '}';
     }
 
+    public Set<Article> getArticleSet() {
+        return articleSet;
+    }
+
+    public void setArticleSet(Set<Article> articleSet) {
+        this.articleSet = articleSet;
+    }
+
     public Author() {
     }
 

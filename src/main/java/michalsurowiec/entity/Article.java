@@ -13,25 +13,19 @@ public class Article {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
     @NotNull
     private String title;
-
     @ManyToOne
     @JoinColumn(name = "author_Id")
     private Author author;
-
     @ManyToMany
     @JoinTable(name = "article_category",
-            joinColumns = @JoinColumn(name = "article_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id"))
+            joinColumns = @JoinColumn(name = "article_id", nullable = false),
+            inverseJoinColumns = @JoinColumn(name = "category_id", nullable = false))
     private Set<Category> categorySet = new HashSet<>();
-
     @NotNull
     private String content;
-
     private LocalDateTime created;
-
     private LocalDateTime updated;
 
     @PrePersist
