@@ -5,6 +5,7 @@ import michalsurowiec.dao.AuthorDao;
 import michalsurowiec.dao.CategoryDao;
 import michalsurowiec.dto.CategoryDto;
 import michalsurowiec.entity.Category;
+import michalsurowiec.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,15 +15,13 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/category")
 public class CategoryController {
 
-    ArticleDao articleDao;
-    AuthorDao authorDao;
     CategoryDao categoryDao;
+    CategoryService categoryService;
 
     @Autowired
-    public CategoryController(ArticleDao articleDao, AuthorDao authorDao, CategoryDao categoryDao){
-        this.articleDao = articleDao;
-        this.authorDao = authorDao;
+    public CategoryController(CategoryDao categoryDao, CategoryService categoryService){
         this.categoryDao = categoryDao;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/create")
@@ -57,14 +56,12 @@ public class CategoryController {
 //        categoryDao.delete(categoryDao.readById(id));
 //    }
 
-    //Problem z read - lazyException
-//    @GetMapping("/read")
-//    @ResponseBody
-//    public String readCategory(){
-//        StringBuffer stringBuffer = new StringBuffer();
-//        Hibernate.initialize(new Category().getArticleSet());
-//        categoryDao.readAll().stream().forEach(category -> stringBuffer.append(category.toString()).append("<br>"));
-//        return stringBuffer.toString();
-//    }
+    @GetMapping("/read")
+    @ResponseBody
+    public String readCategory(){
+        StringBuffer stringBuffer = new StringBuffer();
+        categoryService.getAllCategories().forEach(categoryDto -> stringBuffer.append(categoryDto.toString()).append("<br>"));
+        return stringBuffer.toString();
+    }
 
 }

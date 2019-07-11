@@ -5,6 +5,7 @@ import michalsurowiec.dao.AuthorDao;
 import michalsurowiec.dao.CategoryDao;
 import michalsurowiec.dto.ArticleDto;
 import michalsurowiec.entity.Article;
+import michalsurowiec.service.ArticleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,14 +16,12 @@ import org.springframework.web.bind.annotation.*;
 public class ArticleController {
 
     ArticleDao articleDao;
-    AuthorDao authorDao;
-    CategoryDao categoryDao;
+    ArticleService articleService;
 
     @Autowired
-    public ArticleController(ArticleDao articleDao, AuthorDao authorDao, CategoryDao categoryDao){
+    public ArticleController(ArticleDao articleDao, ArticleService articleService){
         this.articleDao = articleDao;
-        this.authorDao = authorDao;
-        this.categoryDao = categoryDao;
+        this.articleService = articleService;
     }
 
     @GetMapping("/create")
@@ -48,6 +47,14 @@ public class ArticleController {
     public String updateCategory(@PathVariable("id") long id, Model model){
         model.addAttribute("categorydto", new ArticleDto(id));
         return "save_article";
+    }
+
+    @GetMapping("/read")
+    @ResponseBody
+    public String readArticles(){
+        StringBuffer stringBuffer = new StringBuffer();
+        articleService.getAllArticles().forEach(articleDto -> stringBuffer.append(articleDto.toString()).append("<br>"));
+        return stringBuffer.toString();
     }
 
 }

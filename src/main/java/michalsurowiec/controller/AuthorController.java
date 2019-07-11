@@ -5,8 +5,11 @@ import michalsurowiec.dao.AuthorDao;
 import michalsurowiec.dao.CategoryDao;
 import michalsurowiec.dto.AuthorDto;
 import michalsurowiec.entity.Author;
+import michalsurowiec.repository.AuthorRepository;
+import michalsurowiec.service.AuthorService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
@@ -14,15 +17,15 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/author")
 public class AuthorController {
 
-    ArticleDao articleDao;
     AuthorDao authorDao;
-    CategoryDao categoryDao;
+    AuthorRepository authorRepository;
+    AuthorService authorService;
 
     @Autowired
-    public AuthorController(ArticleDao articleDao, AuthorDao authorDao, CategoryDao categoryDao){
-        this.articleDao = articleDao;
+    public AuthorController(AuthorDao authorDao, AuthorRepository authorRepository, AuthorService authorService){
         this.authorDao = authorDao;
-        this.categoryDao = categoryDao;
+        this.authorRepository = authorRepository;
+        this.authorService = authorService;
     }
 
     @GetMapping("/create")
@@ -32,7 +35,7 @@ public class AuthorController {
     }
 
     @PostMapping("/save")
-    public void saveCategory(@ModelAttribute AuthorDto authorDto){
+    public void saveAuthor(@ModelAttribute AuthorDto authorDto){
         Author author = new Author();
         author.setFirstName(authorDto.getFirstName());
         author.setLastName(authorDto.getLastName());
@@ -46,9 +49,23 @@ public class AuthorController {
     }
 
     @GetMapping("/update/{id}")
-    public String updateCategory(@PathVariable("id") long id, Model model){
+    public String updateAuthor(@PathVariable("id") Long id, Model model){
         model.addAttribute("authordto", new AuthorDto(id));
         return "save_author";
+    }
+
+    @GetMapping(path = "/show/{id}", produces = "text/html;charset=UTF-8")
+    @ResponseBody
+    public String showAuthor(@PathVariable("id") Long id){
+        return authorService.getAuthorById(id).toString();
+    }
+
+    @GetMapping("/read")
+    @ResponseBody
+    public String readAllAuthors(){
+        StringBuffer stringBuffer = new StringBuffer();
+        authorService.getAllAuthors().forEach(authorDto -> stringBuffer.append(authorDto.toString()).append("<br>"));
+        return stringBuffer.toString();
     }
 
 }
