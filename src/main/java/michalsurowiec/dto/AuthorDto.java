@@ -1,16 +1,20 @@
 package michalsurowiec.dto;
 
 import michalsurowiec.entity.Article;
+import michalsurowiec.entity.Author;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.function.Function;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 public class AuthorDto {
 
     private Long id;
     private String firstName;
     private String lastName;
-    private Set<Article> articleSet = new HashSet<>();
+    private String articleSet;
 
     public AuthorDto(Long id) {
         this.id = id;
@@ -50,21 +54,23 @@ public class AuthorDto {
         this.lastName = lastName;
     }
 
-    public Set<Article> getArticleSet() {
+    public String getArticleSet() {
         return articleSet;
     }
 
-    public void setArticleSet(Set<Article> articleSet) {
+    public void setArticleSet(String articleSet) {
         this.articleSet = articleSet;
     }
 
     public AuthorDto() {
     }
 
-    public AuthorDto(long id, String firstName, String lastName, Set<Article> articleSet) {
-        this.id = id;
-        this.firstName = firstName;
-        this.lastName = lastName;
-        this.articleSet = articleSet;
+    public AuthorDto(Author author){
+        this.id = author.getId();
+        this.firstName = author.getFirstName();
+        this.lastName = author.getLastName();
+        this.articleSet = author.getArticleSet().stream()
+                .map(Article::getTitle)
+                .collect(Collectors.joining(", "));
     }
 }

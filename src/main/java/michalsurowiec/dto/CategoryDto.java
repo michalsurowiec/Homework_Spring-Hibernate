@@ -1,16 +1,18 @@
 package michalsurowiec.dto;
 
 import michalsurowiec.entity.Article;
+import michalsurowiec.entity.Category;
 
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class CategoryDto {
 
     private Long id;
     private String name;
     private String description;
-    private Set<Article> articleSet = new HashSet<>();
+    private String articleSet;
 
     public CategoryDto(long id) {
         this.id = id;
@@ -50,21 +52,24 @@ public class CategoryDto {
         this.description = description;
     }
 
-    public Set<Article> getArticleSet() {
+    public String getArticleSet() {
         return articleSet;
     }
 
-    public void setArticleSet(Set<Article> articleSet) {
+    public void setArticleSet(String articleSet) {
         this.articleSet = articleSet;
     }
 
     public CategoryDto() {
     }
 
-    public CategoryDto(long id, String name, String description, Set<Article> articleSet) {
-        this.id = id;
-        this.name = name;
-        this.description = description;
-        this.articleSet = articleSet;
+    public CategoryDto(Category category) {
+        this.id = category.getId();
+        this.name = category.getName();
+        this.description = category.getDescription();
+        this.articleSet = category.getArticleSet()
+                .stream()
+                .map(Article::getTitle)
+                .collect(Collectors.joining(", "));
     }
 }

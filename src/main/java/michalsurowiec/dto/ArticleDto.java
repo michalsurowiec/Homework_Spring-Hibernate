@@ -1,21 +1,25 @@
 package michalsurowiec.dto;
 
+import michalsurowiec.entity.Article;
 import michalsurowiec.entity.Author;
 import michalsurowiec.entity.Category;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 public class ArticleDto {
 
     private Long id;
     private String title;
-    private Author author;
-    private Set<Category> categorySet = new HashSet<>();
+    //Powiązane OneToMany z klasą Author
+    private String author;
+    //Powiązane ManytoMany z klasą Category
+    private String categorySet;
     private String content;
-    private LocalDateTime created;
-    private LocalDateTime updated;
+    private String created;
+    private String updated;
 
     public ArticleDto(Long id) {
         this.id = id;
@@ -50,19 +54,19 @@ public class ArticleDto {
         this.title = title;
     }
 
-    public Author getAuthor() {
+    public String getAuthor() {
         return author;
     }
 
-    public void setAuthor(Author author) {
+    public void setAuthor(String author) {
         this.author = author;
     }
 
-    public Set<Category> getCategorySet() {
+    public String getCategorySet() {
         return categorySet;
     }
 
-    public void setCategorySet(Set<Category> categorySet) {
+    public void setCategorySet(String categorySet) {
         this.categorySet = categorySet;
     }
 
@@ -74,32 +78,35 @@ public class ArticleDto {
         this.content = content;
     }
 
-    public LocalDateTime getCreated() {
+    public String getCreated() {
         return created;
     }
 
-    public void setCreated(LocalDateTime created) {
+    public void setCreated(String created) {
         this.created = created;
     }
 
-    public LocalDateTime getUpdated() {
+    public String getUpdated() {
         return updated;
     }
 
-    public void setUpdated(LocalDateTime updated) {
+    public void setUpdated(String updated) {
         this.updated = updated;
     }
 
     public ArticleDto() {
     }
 
-    public ArticleDto(long id, String title, Author author, Set<Category> categorySet, String content, LocalDateTime created, LocalDateTime updated) {
-        this.id = id;
-        this.title = title;
-        this.author = author;
-        this.categorySet = categorySet;
-        this.content = content;
-        this.created = created;
-        this.updated = updated;
+    public ArticleDto(Article article) {
+        this.id = article.getId();
+        this.title = article.getTitle();
+        this.author = article.getAuthor().getFirstName() + " " + article.getAuthor().getLastName();
+        this.categorySet = article.getCategorySet()
+                .stream()
+                .map(Category::getName)
+                .collect(Collectors.joining(", "));
+        this.content = article.getContent();
+        this.created = article.getCreated().toString();
+        this.updated = article.getUpdated().toString();
     }
 }
