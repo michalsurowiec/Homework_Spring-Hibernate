@@ -68,4 +68,9 @@ public class AuthorController {
         return stringBuffer.toString();
     }
 
+    @GetMapping("/delete/{id}")
+    public void deleteAuthor(@PathVariable("id") Long id){
+        authorService.deleteAuthor(id);
+    }
+
 }

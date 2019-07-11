@@ -17,6 +17,7 @@ public class ArticleDto {
     private String author;
     //Powiązane ManytoMany z klasą Category
     private String categorySet;
+    private Long[] categoryIdTable;
     private String content;
     private String created;
     private String updated;
@@ -105,8 +106,20 @@ public class ArticleDto {
                 .stream()
                 .map(Category::getName)
                 .collect(Collectors.joining(", "));
+        this.categoryIdTable = article.getCategorySet()
+                .stream()
+                .map(Category::getId)
+                .toArray(Long[]::new);
         this.content = article.getContent();
         this.created = article.getCreated().toString();
         this.updated = article.getUpdated().toString();
+    }
+
+    public Long[] getCategoryIdTable() {
+        return categoryIdTable;
+    }
+
+    public void setCategoryIdTable(Long[] categoryIdTable) {
+        this.categoryIdTable = categoryIdTable;
     }
 }

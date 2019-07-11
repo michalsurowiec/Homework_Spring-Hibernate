@@ -12,4 +12,7 @@ public interface AuthorRepository extends JpaRepository<Author, Long> {
     List<Author> findAll();
 
     Author findById (Long id);
+
+    @Override
+    void delete(Author author);
 }

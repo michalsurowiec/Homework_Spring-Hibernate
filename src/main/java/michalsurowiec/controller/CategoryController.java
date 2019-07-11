@@ -50,11 +50,10 @@ public class CategoryController {
         return "create_category";
     }
 
-    //Problem z delete - powiązane rekordy
-//    @GetMapping("/delete/{id}")
-//    public void deleteCategory(@PathVariable("id") long id){
-//        categoryDao.delete(categoryDao.readById(id));
-//    }
+    @GetMapping("/delete/{id}")
+    public void deleteCategory(@PathVariable("id") long id){
+        categoryService.deleteCategory(id);
+    }
 
     @GetMapping("/read")
     @ResponseBody
